@@ -92,7 +92,7 @@ const createContractLineItems = async (token, entityName, entityId, cltId, cliDa
         .filter((filename) => /\.(xls|xlsx)$/i.test(filename))
     for (const excelFile of excelFiles) {
         const entityId = excelFile.split('.')[0]
-        const entityName = entityId.startsWith('CO') ? 'contracts' : 'contract-draft-requests'
+        const entityName = entityId.toUpperCase().startsWith('CO') ? 'contracts' : 'contract-draft-requests'
         const cltId = !CLT_ID_OVERRIDE ? excelFile.split('.')[1] : CLT_ID_OVERRIDE
         const excelData = await getExcelData(`${FILES_DIR}/${excelFile}`)
         const cliData = await mapFields(excelData, cltId)
