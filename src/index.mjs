@@ -20,7 +20,7 @@ const unitType = () => (d) => { return { id: 2098 } }
 const pricingType = () => (d) => { return { id: 1001 } }
 // transforms excel date number to dd.MM.yyyy
 const excelToDate = () => (n) => { return new Date((n - 25569) * 86400 * 1000).toLocaleDateString('de-DE') };
-// update with sirion clt field names and excel column values
+// update with sirion clt field names and excel column names
 const fieldMapping = {
     $iterate: true,
     //'CLT field name': 'Excel column name'
