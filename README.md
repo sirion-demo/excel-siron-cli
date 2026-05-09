@@ -6,7 +6,7 @@ npm install
 npm start
 ```
 ## Tenant variables
-Copy .env_example and rename to .env then set the following environment variables
+Copy .env-example and rename to .env then set the following environment variables
 ```
 SIRION_URL=https://<tenant>.sirioncloud.com
 SIRION_CLIENTID=<clientId>
