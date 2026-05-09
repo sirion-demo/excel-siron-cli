@@ -12,7 +12,7 @@ const SIRION_URL = process.env.SIRION_URL
 const api = createApi(SIRION_URL);
 const FILES_DIR = 'files'
 const CLI_BATCH_SIZE = 1000
-const SIRION_CLTID_OVERRIDE = '' // if populated then clt id is not required in excel filename
+const CLT_ID_OVERRIDE = '' // if populated then clt id is not required in excel filename
 
 // transform excel cell values into sirion cli field values
 // fixed values
@@ -93,7 +93,7 @@ const createContractLineItems = async (token, entityName, entityId, cltId, cliDa
     for (const excelFile of excelFiles) {
         const entityId = excelFile.split('.')[0]
         const entityName = entityId.startsWith('CO') ? 'contracts' : 'contract-draft-requests'
-        const cltId = !SIRION_CLTID_OVERRIDE ? excelFile.split('.')[1] : SIRION_CLTID_OVERRIDE
+        const cltId = !CLT_ID_OVERRIDE ? excelFile.split('.')[1] : CLT_ID_OVERRIDE
         const excelData = await getExcelData(`${FILES_DIR}/${excelFile}`)
         const cliData = await mapFields(excelData, cltId)
         const responses = await createContractLineItems(token, entityName, entityId, cltId, cliData)
