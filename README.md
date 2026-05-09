@@ -65,8 +65,7 @@ API version 2 requires ID values for select lists, e.g. currencyIdV2 maps values
 const currencyIdV2 = [{ n: "EUR", i: 2 }, { n: "INR", i: 8 }, { n: "TRY", i: 48 }, { n: "AED", i: 49 }, { n: "GBP", i: 4 }, { n: "USD", i: 1 }]  
 const currency = () => (d) => { return { id: currencyIdV2.find(c => c.n === d) } }  
 ```
-API version 3 accepts s_uuid or s_externalId (if populated) which does not require IDs,  
-value can be passed directly simplifying and reducing code e.g. { externalId: "USD" } 
+API version 3 accepts s_uuid or s_externalId (if populated) which does not require IDs, value can be passed directly simplifying and reducing code e.g. { externalId: "USD" } 
 ```js
 const currency = () => (d) => { return { externalId: d } }
 ```
