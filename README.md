@@ -71,7 +71,7 @@ API version 3 accepts s_uuid or s_externalId (if populated) which does not requi
 ```js
 const currency = () => (d) => { return { externalId: d } }
 ```
-The app contains both version 2 and version 3 APIs, the const API_VER is defaulted to 'v2', changing to 'v3' uses CLI API version 3, CLI select lists must use s_uuid or s_externalId values
+The app contains both version 2 and version 3 APIs, the const API_VER is defaulted to 'v2', changing the value to 'v3' uses CLI API version 3, CLI select lists must use s_uuid or s_externalId values
 ```js
 const API_VER = 'v3'
 ...
