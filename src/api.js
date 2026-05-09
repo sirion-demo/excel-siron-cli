@@ -88,9 +88,79 @@ function createApi(baseUrl) {
     }
   );
 
+  const createContractLineItemsV3 = (token, entityName, entityUuid, templateUuid, data) => request(
+    `/b2bapi/v3/${encodePath(entityName)}/${encodePath(entityUuid)}/contract-line-item-templates/${encodePath(templateUuid)}/contract-line-items`,
+    {
+      method: "POST",
+      token,
+      body: data
+    }
+  );
+
+  const getContractLineItemTemplateUuid = async (token, entityName, cltId) => {
+    const response = await request(`/b2bapi/v3/${encodePath(entityName)}/contract-line-item-templates/search`, {
+      method: "POST",
+      token,
+      body: {
+        orderDirection: "desc",
+        limit: 200,
+        offset: 0,
+        fields: [
+          "id"
+        ]
+      }
+    });
+
+    const records = Array.isArray(response) ? response : response?.data;
+    const template = records?.find((record) => record?.id === cltId);
+
+    if (!template?.s_uuid) {
+      throw new Error(`Contract line item template not found for id ${cltId}`);
+    }
+
+    return template.s_uuid;
+  };
+
+  const getEntityUuid = async (token, entityName, entityId) => {
+    const response = await request(`/b2bapi/v3/${encodePath(entityName)}/search`, {
+      method: "POST",
+      token,
+      body: {
+        filters: [
+          {
+            apiName: "id",
+            negate: false,
+            empty: false,
+            value: [
+              entityId
+            ]
+          }
+        ],
+        orderDirection: "desc",
+        offset: 0,
+        limit: 1,
+        fields: [
+          "id"
+        ]
+      }
+    });
+
+    const records = Array.isArray(response) ? response : response?.data;
+    const entity = records?.find((record) => record?.id === entityId) ?? records?.[0];
+
+    if (!entity?.s_uuid) {
+      throw new Error(`Entity not found for id ${entityId}`);
+    }
+
+    return entity.s_uuid;
+  };
+
   return {
     auth,
-    createContractLineItems
+    createContractLineItems,
+    createContractLineItemsV3,
+    getContractLineItemTemplateUuid,
+    getEntityUuid
   };
 }
 
