@@ -143,5 +143,5 @@ const createContractLineItems = async (token, entityName, entityId, cltId, cliDa
     }
     const reportFile = `Report-${new Date().toISOString().replaceAll(':', '-')}`.split('.')[0] + '.xlsx'
     xlsx.writeFile(workbook, `${FILES_DIR}/${reportFile}`)
-    console.log(`Report written to ${FILES_DIR}/${reportFile}`)
+    console.log(`Results report saved to ${FILES_DIR}/${reportFile}`)
 })()
