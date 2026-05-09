@@ -40,7 +40,7 @@ const excelToDate = () => (n) => { return new Date((n - 25569) * 86400 * 1000).t
 ```
 Update field mappings with Sirion contract line item template ID, field names and Excel column names
 ```
-const fieldMapping['<CLT ID>'] = {
+const fieldMappings['<CLT ID>'] = {
     $iterate: true,
     //'CLT field name': 'Excel column name'
     'Product': 'SKU',
