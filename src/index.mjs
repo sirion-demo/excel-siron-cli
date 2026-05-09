@@ -7,7 +7,7 @@ import mapTransform, { alt, transform, transformers } from 'map-transform'
 import { createApi } from './api.js';
 const SIRION_CLIENTID = process.env.SIRION_CLIENTID
 const SIRION_CLIENTSECRET = process.env.SIRION_CLIENTSECRET
-const SIRION_USERID = process.env.SIRION_USERID // optional, if empty then applies permissions defined on OAuth credential
+const SIRION_LOGINID = process.env.SIRION_LOGINID // optional, if empty then permissions defined on OAuth credential are applied and activty is logged as system admin
 const SIRION_URL = process.env.SIRION_URL
 const api = createApi(SIRION_URL);
 const FILES_DIR = 'files'
@@ -86,7 +86,7 @@ const createContractLineItems = async (token, entityName, entityId, cltId, cliDa
 
 (async () => {
     // sirion api authentication
-    const token = await api.auth.clientToken(SIRION_CLIENTID, SIRION_CLIENTSECRET, SIRION_USERID)
+    const token = await api.auth.clientToken(SIRION_CLIENTID, SIRION_CLIENTSECRET, SIRION_LOGINID)
     // iterate through excel files
     const excelFiles = fs.readdirSync(FILES_DIR)
         .filter((filename) => /\.(xls|xlsx)$/i.test(filename))
