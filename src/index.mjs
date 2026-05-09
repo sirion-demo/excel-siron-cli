@@ -21,7 +21,8 @@ const pricingType = () => (d) => { return { id: 1001 } }
 // transforms excel date number to dd.MM.yyyy
 const excelToDate = () => (n) => { return new Date((n - 25569) * 86400 * 1000).toLocaleDateString('de-DE') };
 // update with sirion clt field names and excel column names
-const fieldMapping = {
+const fieldMappings = []
+fieldMappings['CLT02952'] = {
     $iterate: true,
     //'CLT field name': 'Excel column name'
     'Product': 'SKU',
@@ -43,8 +44,11 @@ const getExcelData = async (filename) => {
     return data
 }
 
-const mapFields = async (data) => {
-    const mapper = mapTransform(fieldMapping)
+const mapFields = async (data, cltId) => {
+    if(!fieldMappings[cltId]){
+        throw new Error(`No fieldMappings found for ${cltId}`)
+    }
+    const mapper = mapTransform(fieldMappings[cltId])
     const target = await mapper(data)
     // cli require unique rowNum
     const result = target.map((row, index) => ({
@@ -77,10 +81,10 @@ const createContractLineItems = async (token, entityId, cltId, cliData) => {
     const excelFiles = fs.readdirSync(FILES_DIR)
         .filter((filename) => /\.(xls|xlsx)$/i.test(filename))
     for (const excelFile of excelFiles) {
-        const excelData = await getExcelData(`${FILES_DIR}/${excelFile}`)
-        const cliData = await mapFields(excelData)
         const entityId = excelFile.split('.')[0]
         const cltId = excelFile.split('.')[1]
+        const excelData = await getExcelData(`${FILES_DIR}/${excelFile}`)
+        const cliData = await mapFields(excelData, cltId)
         const responses = await createContractLineItems(token, entityId, cltId, cliData)
         console.log(excelFile)
         console.log(JSON.stringify(responses, null, 2))
