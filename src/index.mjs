@@ -12,12 +12,12 @@ const SIRION_CLIENTSECRET = process.env.SIRION_CLIENTSECRET
 const SIRION_USERID = process.env.SIRION_USERID // optional, if empty then applies permissions defined on OAuth credential
 const SIRION_URL = process.env.SIRION_URL
 const api = createApi(SIRION_URL);
-const ENTITY = 'contracts' // or 'contract-draft-requests'
 
 // transform excel cell values into sirion cli field values
 // fixed values
 const unitType = () => (d) => { return { id: 2098 } }
 const pricingType = () => (d) => { return { id: 1001 } }
+const country = () => (d) => 'United States'
 // transforms excel date number to dd.MM.yyyy
 const excelToDate = () => (n) => { return new Date((n - 25569) * 86400 * 1000).toLocaleDateString('de-DE') };
 // update with sirion clt field names and excel column names
@@ -33,6 +33,16 @@ fieldMappings['CLT02952'] = {
     'Pricing Type': alt(null, transform(pricingType)),
     'Start Date': ['Effective Date', transform(excelToDate)],
     'End Date': ['Expiration Date', transform(excelToDate)]
+}
+
+fieldMappings['CLT03063'] = {
+    $iterate: true,
+    //'CLT field name': 'Excel column name'
+    'Number': 'SKU',
+    'Product': 'Product Name',
+    'Quantity': 'Qty',
+    'Price': 'Price',
+    'Country': alt(null, transform(country)),
 }
 
 const getExcelData = async (filename) => {
@@ -58,7 +68,7 @@ const mapFields = async (data, cltId) => {
     return result
 }
 
-const createContractLineItems = async (token, entityId, cltId, cliData) => {
+const createContractLineItems = async (token, entityName, entityId, cltId, cliData) => {
     if (!Array.isArray(cliData) || !cliData.length > 0) {
         throw new Error('cliData must be an array')
     }
@@ -66,7 +76,7 @@ const createContractLineItems = async (token, entityId, cltId, cliData) => {
     const responses = []
     for (let index = 0; index < cliData.length; index += CLI_BATCH_SIZE) {
         const batch = cliData.slice(index, index + CLI_BATCH_SIZE)
-        const response = await api.createContractLineItems(token, ENTITY, entityId, cltId, {
+        const response = await api.createContractLineItems(token, entityName, entityId, cltId, {
             data: batch
         })
         responses.push(response)
@@ -82,10 +92,11 @@ const createContractLineItems = async (token, entityId, cltId, cliData) => {
         .filter((filename) => /\.(xls|xlsx)$/i.test(filename))
     for (const excelFile of excelFiles) {
         const entityId = excelFile.split('.')[0]
+        const entityName = entityId.startsWith('CO')? 'contracts' : 'contract-draft-requests'
         const cltId = excelFile.split('.')[1]
         const excelData = await getExcelData(`${FILES_DIR}/${excelFile}`)
         const cliData = await mapFields(excelData, cltId)
-        const responses = await createContractLineItems(token, entityId, cltId, cliData)
+        const responses = await createContractLineItems(token, entityName, entityId, cltId, cliData)
         console.log(excelFile)
         console.log(JSON.stringify(responses, null, 2))
     }
