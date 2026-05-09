@@ -14,7 +14,7 @@ SIRION_CLIENTSECRET=<clientSecret>
 ```
 ## Excel files
 Copy Excel files into the 'files' folder with these naming conventions    
-If CLT_ID_OVERRIDE (in src/index.mjs) is not populated, then the CLT ID **is** required in the Excel filename, enabling multiple CLTs and both CO/CDR
+If CLT_ID_OVERRIDE (in src/index.mjs) is not populated, then the contract line item template(CLT) ID **is** required in the Excel filename, enabling multiple CLTs and both CO/CDR
 ```
 const CLT_ID_OVERRIDE = ''
 Excel filename convention: <Entity ID>.<CLT ID>.xlsx 
