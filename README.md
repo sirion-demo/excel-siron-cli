@@ -13,11 +13,20 @@ SIRION_CLIENTID=<clientId>
 SIRION_CLIENTSECRET=<clientSecret>
 ```
 ## Excel files
-Copy Excel files into the 'files' folder with this naming convention 
+Copy Excel files into the 'files' folder with these naming conventions    
+If CLT_ID_OVERRIDE is not populated, then the CLT ID is required in the Excel filename
 ```
-<entityId>.<cltId>.xlsx 
-Example: CO02027.CLT02952.xlsx
+ const CLT_ID_OVERRIDE = ''
+ <Entity ID>.<CLT ID>.xlsx 
+ Examples: CO02027.CLT02952.xlsx, CDR06756.CLT03063.xlsx
+ ```
+If CLT_ID_OVERRIDE is populated, then the CLT ID is not required in the Excel filename and it's the only CLT used
 ```
+const CLT_ID_OVERRIDE = 'CLT02952'
+ <Entity ID>.xlsx 
+ Examples: CO02027.xlsx, CO02028.xlsx
+```
+
 ## Update field transformations and mappings (src/index.mjs) 
 Documentation https://www.npmjs.com/package/map-transform  
 Modify to transform Excel cell values into Sirion field values or fixed values
