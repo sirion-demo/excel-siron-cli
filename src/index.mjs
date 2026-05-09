@@ -5,13 +5,13 @@ import xlsx from 'xlsx';
 xlsx.set_fs(fs)
 import mapTransform, { alt, transform, transformers } from 'map-transform'
 import { createApi } from './api.js';
-const FILES_DIR = 'files'
-const CLI_BATCH_SIZE = 1000
 const SIRION_CLIENTID = process.env.SIRION_CLIENTID
 const SIRION_CLIENTSECRET = process.env.SIRION_CLIENTSECRET
 const SIRION_USERID = process.env.SIRION_USERID // optional, if empty then applies permissions defined on OAuth credential
 const SIRION_URL = process.env.SIRION_URL
 const api = createApi(SIRION_URL);
+const FILES_DIR = 'files'
+const CLI_BATCH_SIZE = 1000
 const SIRION_CLTID_OVERRIDE = '' // if populated then clt id is not required in excel filename
 
 // transform excel cell values into sirion cli field values
