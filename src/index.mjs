@@ -12,7 +12,7 @@ const SIRION_URL = process.env.SIRION_URL
 const api = createApi(SIRION_URL);
 const FILES_DIR = 'files'
 const CLI_BATCH_SIZE = 1000
-const CLT_ID_OVERRIDE = 'CLT03063' // if populated then clt id is not required in excel filename
+const CLT_ID_OVERRIDE = '' // if populated then clt id is not required in excel filename
 
 // transform excel cell values into sirion cli field values
 // fixed values
