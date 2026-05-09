@@ -14,7 +14,7 @@ SIRION_CLIENTSECRET=<clientSecret>
 ```
 ## Excel files
 Copy Excel files into the 'files' folder with these naming conventions    
-If CLT_ID_OVERRIDE is not populated, then the CLT ID **is** required in the Excel filename, enabling multiple CLTs and both CO/CDR
+If CLT_ID_OVERRIDE (in src/index.mjs) is not populated, then the CLT ID **is** required in the Excel filename, enabling multiple CLTs and both CO/CDR
 ```
 const CLT_ID_OVERRIDE = ''
 Excel filename convention: <Entity ID>.<CLT ID>.xlsx 
@@ -34,6 +34,7 @@ Modify to transform Excel cell values into Sirion field values or fixed values
 // fixed values
 const unitType = () => (d) => { return {id: 2098} }
 const pricingType = () => (d) => { return {id: 1001} }
+const country = () => (d) => 'United States'
 // transform Excel date number to dd.MM.yyyy
 const excelToDate = () => (n) => { return new Date((n - 25569) * 86400 * 1000).toLocaleDateString('de-DE')};
 ```
