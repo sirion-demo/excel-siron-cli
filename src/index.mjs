@@ -12,7 +12,7 @@ const SIRION_CLIENTSECRET = process.env.SIRION_CLIENTSECRET
 const SIRION_USERID = process.env.SIRION_USERID // optional, if empty then applies permissions defined on OAuth credential
 const SIRION_URL = process.env.SIRION_URL
 const api = createApi(SIRION_URL);
-const ENTITY = 'contracts' // or 'contract-draft-requests
+const ENTITY = 'contracts' // or 'contract-draft-requests'
 
 // transform excel cell values into sirion cli field values
 // fixed values
