@@ -72,7 +72,7 @@ const createContractLineItems = async (token, entityId, cltId, cliData) => {
 
 (async () => {
     // sirion api authentication
-    const token = await api.auth.clientToken(SIRION_CLIENTID, SIRION_CLIENTSECRET)
+    const token = await api.auth.clientToken(SIRION_CLIENTID, SIRION_CLIENTSECRET, SIRION_USERID)
     // iterate through excel files
     const excelFiles = fs.readdirSync(FILES_DIR)
         .filter((filename) => /\.(xls|xlsx)$/i.test(filename))
