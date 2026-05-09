@@ -1,13 +1,13 @@
 # Excel to Sirion Contract Line Items
 Read Excel files and create Sirion contract line items with field name mapping, field value transformation and API rate limiting
 ## Usage 
-```
+```js
 npm install
 npm start
 ```
 ## Tenant variables
 Copy .env_example and rename to .env then set the following environment variables
-```
+```js
 SIRION_URL=https://<tenant>.sirioncloud.com
 SIRION_CLIENTID=<clientId>
 SIRION_CLIENTSECRET=<clientSecret>
@@ -30,7 +30,7 @@ Examples: CO02027.xlsx, CO02028.xlsx
 ## Update field transformations and mappings (src/index.mjs) 
 Documentation https://www.npmjs.com/package/map-transform  
 Modify to transform Excel cell values into Sirion field values or fixed values
-```
+```js
 // fixed values
 const unitType = () => (d) => { return {id: 2098} }
 const pricingType = () => (d) => { return {id: 1001} }
@@ -39,7 +39,7 @@ const country = () => (d) => 'United States'
 const excelToDate = () => (n) => { return new Date((n - 25569) * 86400 * 1000).toLocaleDateString('de-DE')};
 ```
 Update field mappings with Sirion contract line item template ID, field names and Excel column names
-```
+```js
 const fieldMappings['<CLT ID>'] = {
     $iterate: true,
     //'CLT field name': 'Excel column name'
@@ -56,6 +56,22 @@ const fieldMappings['<CLT ID>'] = {
 ## XLSX Package
 Documentation https://docs.sheetjs.com/docs/  
 The xlxs package on npmjs.com contains security issues, this version doesn't have them
-```
+```js
 npm i --save https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz 
+```
+## API version
+API version 2 requires ID values for select lists, e.g. currencyIdV2 maps values to IDs "EUR" = { id: 2 }  
+```js
+const currencyIdV2 = [{ n: "EUR", i: 2 }, { n: "INR", i: 8 }, { n: "TRY", i: 48 }, { n: "AED", i: 49 }, { n: "GBP", i: 4 }, { n: "USD", i: 1 }]  
+const currency = () => (d) => { return { id: currencyIdV2.find(c => c.n === d) } }  
+```
+API version 3 accepts s_uuid or s_externalId (if populated) which does not require IDs, value is passed directly { externalId: "USD" } simplifying and reducing code  
+```js
+const currency = () => (d) => { return { externalId: d } }
+```
+The const API_VER is defaulted to v2, changing to v3 uses CLI API version 3, CLI select list values must use s_uuid or s_externalId
+```js
+const API_VER = 'v2'
+const currencyIdV2 = [{ n: "EUR", i: 2 }, { n: "INR", i: 8 }, { n: "TRY", i: 48 }, { n: "AED", i: 49 }, { n: "GBP", i: 4 }, { n: "USD", i: 1 }]
+const currency = () => (d) => { return API_VER === 'v2' ? { id: currencyIdV2.find(c => c.n === d) } : { externalId: d } }
 ```

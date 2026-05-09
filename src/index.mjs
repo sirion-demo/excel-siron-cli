@@ -17,11 +17,11 @@ const CLT_ID_OVERRIDE = '' // if populated then clt id is not required in excel 
 
 // transform excel cell values into sirion cli field values
 // fixed values
-const unitType = () => (d) => { return API_VER === 'v2' ? { id: 2098 } : { "s_uuid": "61da74d4-5f79-4f56-b075-0294ffc5672f" } }
-const pricingType = () => (d) => { return API_VER === 'v2' ? { id: 1001 } : { "s_externalId": "Fixed" } }
+const unitType = () => (d) => { return API_VER === 'v2' ? { id: 2098 } : { s_uuid: "61da74d4-5f79-4f56-b075-0294ffc5672f" } }
+const pricingType = () => (d) => { return API_VER === 'v2' ? { id: 1001 } : { s_externalId: "Fixed" } }
 const country = () => (d) => 'United States'
-const currencyV2 = [{ n: "EUR", i: 2 }, { n: "INR", i: 8 }, { n: "TRY", i: 48 }, { n: "AED", i: 49 }, { n: "GBP", i: 4 }, { n: "USD", i: 1 }]
-const currency = () => (d) => { return API_VER === 'v2' ? { id: currencyV2.find(c => c.n === d) } : { externalId: d } }
+const currencyIdV2 = [{ n: "EUR", i: 2 }, { n: "INR", i: 8 }, { n: "TRY", i: 48 }, { n: "AED", i: 49 }, { n: "GBP", i: 4 }, { n: "USD", i: 1 }]
+const currency = () => (d) => { return API_VER === 'v2' ? { id: currencyIdV2.find(c => c.n === d) } : { externalId: d } }
 // transforms excel date number to dd.MM.yyyy
 const excelToDate = () => (n) => { return new Date((n - 25569) * 86400 * 1000).toLocaleDateString('de-DE') };
 // update field mappings with sirion clt id, field names and excel column names
