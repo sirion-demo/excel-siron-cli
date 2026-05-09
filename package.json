@@ -1,6 +1,6 @@
 {
   "name": "excel-sirion-cli",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Read Excel files and create Sirion contract line items with field name mapping, field value transformation and API rate limiting",
   "main": "src/index.mjs",
   "scripts": {
