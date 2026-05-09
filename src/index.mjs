@@ -12,6 +12,7 @@ const SIRION_CLIENTSECRET = process.env.SIRION_CLIENTSECRET
 const SIRION_USERID = process.env.SIRION_USERID // optional, if empty then applies permissions defined on OAuth credential
 const SIRION_URL = process.env.SIRION_URL
 const api = createApi(SIRION_URL);
+const SIRION_CLTID_OVERRIDE = '' // if populated then clt id is not required in excel filename
 
 // transform excel cell values into sirion cli field values
 // fixed values
@@ -20,7 +21,7 @@ const pricingType = () => (d) => { return { id: 1001 } }
 const country = () => (d) => 'United States'
 // transforms excel date number to dd.MM.yyyy
 const excelToDate = () => (n) => { return new Date((n - 25569) * 86400 * 1000).toLocaleDateString('de-DE') };
-// update with sirion clt field names and excel column names
+// update field mappings with sirion clt id, field names and excel column names
 const fieldMappings = []
 fieldMappings['CLT02952'] = {
     $iterate: true,
@@ -54,7 +55,7 @@ const getExcelData = async (filename) => {
 }
 
 const mapFields = async (data, cltId) => {
-    if(!fieldMappings[cltId]){
+    if (!fieldMappings[cltId]) {
         throw new Error(`No fieldMappings found for ${cltId}`)
     }
     const mapper = mapTransform(fieldMappings[cltId])
@@ -91,8 +92,8 @@ const createContractLineItems = async (token, entityName, entityId, cltId, cliDa
         .filter((filename) => /\.(xls|xlsx)$/i.test(filename))
     for (const excelFile of excelFiles) {
         const entityId = excelFile.split('.')[0]
-        const entityName = entityId.startsWith('CO')? 'contracts' : 'contract-draft-requests'
-        const cltId = excelFile.split('.')[1]
+        const entityName = entityId.startsWith('CO') ? 'contracts' : 'contract-draft-requests'
+        const cltId = !SIRION_CLTID_OVERRIDE ? excelFile.split('.')[1] : SIRION_CLTID_OVERRIDE
         const excelData = await getExcelData(`${FILES_DIR}/${excelFile}`)
         const cliData = await mapFields(excelData, cltId)
         const responses = await createContractLineItems(token, entityName, entityId, cltId, cliData)

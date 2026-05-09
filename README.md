@@ -28,9 +28,9 @@ const pricingType = () => (d) => { return {id: 1001} }
 // transform Excel date number to dd.MM.yyyy
 const excelToDate = () => (n) => { return new Date((n - 25569) * 86400 * 1000).toLocaleDateString('de-DE')};
 ```
-Update with Sirion contract line item template field names and Excel column names
+Update field mappings with Sirion contract line item template ID, field names and Excel column names
 ```
-const fieldMapping = {
+const fieldMapping['<CLT ID>'] = {
     $iterate: true,
     //'CLT field name': 'Excel column name'
     'Product': 'SKU',
