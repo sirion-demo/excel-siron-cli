@@ -75,7 +75,6 @@ The const API_VER is defaulted to 'v2', changing to 'v3' uses CLI API version 3,
 const API_VER = 'v3'
 ...
 const unitType = () => (d) => { return API_VER === 'v2' ? { id: 2098 } : { s_uuid: "61da74d4-5f79-4f56-b075-0294ffc5672f" } }
-
 // const currencyIdV2 = [{ n: "EUR", i: 2 }, { n: "INR", i: 8 }, { n: "TRY", i: 48 }, { n: "AED", i: 49 }, { n: "GBP", i: 4 }, { n: "USD", i: 1 }]
 const currency = () => (d) => { return API_VER === 'v2' ? { id: currencyIdV2.find(c => c.n === d) } : { externalId: d } }
 ```
