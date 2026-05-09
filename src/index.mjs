@@ -34,7 +34,6 @@ fieldMappings['CLT02952'] = {
     'Start Date': ['Effective Date', transform(excelToDate)],
     'End Date': ['Expiration Date', transform(excelToDate)]
 }
-
 fieldMappings['CLT03063'] = {
     $iterate: true,
     //'CLT field name': 'Excel column name'
