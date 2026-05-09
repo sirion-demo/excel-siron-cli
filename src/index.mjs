@@ -79,9 +79,9 @@ const createContractLineItems = async (token, entityId, cltId, cliData) => {
     for (const excelFile of excelFiles) {
         const excelData = await getExcelData(`${FILES_DIR}/${excelFile}`)
         const cliData = await mapFields(excelData)
-        const contractId = excelFile.split('.')[0]
+        const entityId = excelFile.split('.')[0]
         const cltId = excelFile.split('.')[1]
-        const responses = await createContractLineItems(token, contractId, cltId, cliData)
+        const responses = await createContractLineItems(token, entityId, cltId, cliData)
         console.log(excelFile)
         console.log(JSON.stringify(responses, null, 2))
     }
