@@ -54,7 +54,7 @@ const fieldMappings['<CLT ID>'] = {
 }
 ```
 ## Results report
-Results are saved as an Excel file in files/Report-{date}T{time}.xlsx, with completed files on the 'Proccessed' worksheet and any files with errors on the 'Exceptions' worksheet
+Results are saved as an Excel file in files/Report-&lt;date&gt;T&lt;time&gt;.xlsx, with completed files on the 'Proccessed' worksheet and any files with errors on the 'Exceptions' worksheet
 ## XLSX Package
 Documentation https://docs.sheetjs.com/docs/  
 The xlxs package on npmjs.com contains security issues, this version doesn't have them
