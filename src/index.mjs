@@ -50,6 +50,7 @@ fieldMappings['CLT03063'] = {
     'Country': alt(null, transform(country)),
 }
 
+// utility function to read excel file and return json data
 const getExcelData = async (filename) => {
     const workbook = xlsx.readFile(filename);
     // first worksheet
@@ -59,6 +60,7 @@ const getExcelData = async (filename) => {
     return data
 }
 
+// utility function to map excel data to sirion cli field values based on fieldMappings
 const mapFields = async (data, cltId) => {
     if (!fieldMappings[cltId]) {
         throw new Error(`No fieldMappings found for ${cltId}`)
@@ -73,6 +75,7 @@ const mapFields = async (data, cltId) => {
     return result
 }
 
+// utility function to batch create cli via sirion api, handles both v2 and v3 api based on API_VER variable, also captures exceptions and processed rows for reporting
 const exceptions = []
 const processed = []
 const createContractLineItems = async (token, entityName, entityId, cltId, cliData, excelFile) => {
@@ -110,6 +113,7 @@ const createContractLineItems = async (token, entityName, entityId, cltId, cliDa
     }
 }
 
+// main function to orchestrate the process, authenticate with sirion api, iterate through excel files in FILES_DIR, map excel data to cli field values and create cli via sirion api, finally save a report of processed rows and exceptions to an excel file in FILES_DIR
 (async () => {
     // sirion api authentication
     const token = await api.auth.clientToken(SIRION_CLIENTID, SIRION_CLIENTSECRET, SIRION_LOGINID)
