@@ -50,8 +50,8 @@ const fieldMappings['<CLT ID>'] = {
     'Product Description': 'Product Name',
     'Quantity': 'Qty',
     'Price': 'Price',
-    'Unit Type':  alt(null, transform(unitType)), // fixed value
-    'Pricing Type': alt(null, transform(pricingType)), // fixed value
+    'Unit Type':  alt(null, transform(unitType)), // static value
+    'Pricing Type': alt(null, transform(pricingType)), // static value
     'Start Date':['Effective Date', transform(excelToDate)], // transforms excel date number to dd.MM.yyyy
     'End Date': ['Expiration Date', transform(excelToDate)] // transforms excel date number to dd.MM.yyyy
 }
