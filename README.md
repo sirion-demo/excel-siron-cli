@@ -29,16 +29,19 @@ Examples: CO02027.xlsx, CO02028.xlsx
 
 ## Update field transformations and mappings (src/index.mjs) 
 Documentation https://www.npmjs.com/package/map-transform  
-Modify to transform Excel cell values into Sirion field values or fixed values
+Modify to transform Excel cell values into Sirion field values
 ```js
-// fixed values
+// static values
 const unitType = () => (d) => { return {id: 2098} }
 const pricingType = () => (d) => { return {id: 1001} }
 const country = () => (d) => 'United States'
+// dynamic values
+const currencyIdV2 = [{ n: "EUR", i: 2 }, { n: "INR", i: 8 }, { n: "TRY", i: 48 }, { n: "AED", i: 49 }, { n: "GBP", i: 4 }, { n: "USD", i: 1 }]
+const currency = () => (d) => { return {id: currencyIdV2.find(c => c.n === d)} }
 // transform Excel date number to dd.MM.yyyy
 const excelToDate = () => (n) => { return new Date((n - 25569) * 86400 * 1000).toLocaleDateString('de-DE')};
 ```
-Update field mappings with Sirion contract line item template ID, field names and Excel column names
+Update field mappings with Sirion contract line item template ID, template field names and Excel column names
 ```js
 const fieldMappings['<CLT ID>'] = {
     $iterate: true,
