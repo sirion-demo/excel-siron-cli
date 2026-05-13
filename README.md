@@ -36,8 +36,8 @@ const unitType = () => (d) => { return {id: 2098} }
 const pricingType = () => (d) => { return {id: 1001} }
 const country = () => (d) => 'United States'
 // dynamic values
-const currencyIdV2 = [{ n: "EUR", i: 2 }, { n: "INR", i: 8 }, { n: "TRY", i: 48 }, { n: "AED", i: 49 }, { n: "GBP", i: 4 }, { n: "USD", i: 1 }]
-const currency = () => (d) => { return {id: currencyIdV2.find(c => c.n === d)} }
+const currencyIdV2 = [{ name: "EUR", id: 2 }, { name: "INR", id: 8 }, { name: "TRY", id: 48 }, { name: "AED", id: 49 }, { name: "GBP", id: 4 }, { name: "USD", id: 1 }]
+const currency = () => (d) => { return {id: currencyIdV2.find(c => c.name === d)?.id} }
 // transform Excel date number to dd.MM.yyyy
 const excelToDate = () => (n) => { return new Date((n - 25569) * 86400 * 1000).toLocaleDateString('de-DE')};
 ```
