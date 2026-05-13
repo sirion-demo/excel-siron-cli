@@ -26,7 +26,7 @@ const currency = () => (d) => { return API_VER === 'v2' ? { id: currencyIdV2.fin
 // transforms excel date number to dd.MM.yyyy
 const excelToDate = () => (n) => { return new Date((n - 25569) * 86400 * 1000).toLocaleDateString('de-DE') };
 
-// update field mappings with sirion clt id, field names and excel column names
+// update field mappings with sirion clt id, template field names and excel column names
 const fieldMappings = []
 fieldMappings['CLT02952'] = {
     $iterate: true,
